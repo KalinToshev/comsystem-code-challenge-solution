@@ -1,8 +1,16 @@
 package com.comsystem.homework.robot;
 
 
+import com.comsystem.homework.model.RobotAction;
 import com.comsystem.homework.model.RobotPlan;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+@Service
 public class RobotOperations {
 
     /**
@@ -15,8 +23,35 @@ public class RobotOperations {
      * @see RobotPlan
      */
     public RobotPlan excavateStonesForDays(int days) {
-        // TODO
-        return null;
+        int numberOfStones = 0;
+
+        //Initialize a list to hold the sequence of robot actions
+        List<RobotAction> robotActions = new ArrayList<>();
+
+        //Handle the simple cases where days are 1 or 2 directly
+        //as they do not require cloning, only digging
+        if (days <= 2) {
+            numberOfStones = days;
+            //Add DIG action for each day available
+            for (int i = 0; i < days; i++) {
+                robotActions.add(RobotAction.DIG);
+            }
+        } else {
+            //For more than two days, robots will clone themselves every day, without the last day
+            for (int i = 1; i < days; i++) {
+                robotActions.add(RobotAction.CLONE);
+            }
+            //On the last day, all robots dig for stones
+            robotActions.add(RobotAction.DIG);
+
+            //Calculate the total number of stones collected as 2^(days-1)
+            //representing the exponential growth of robots due to cloning
+            numberOfStones = (int) Math.pow(2, days - 1);
+        }
+
+        //Return a new RobotPlan with the total days, number of stones collected
+        //and the sequence of actions taken
+        return new RobotPlan(days, numberOfStones, robotActions);
     }
 
     /**
