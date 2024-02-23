@@ -1,0 +1,5 @@
+com\comsystem\homework\robot\RobotOperations.class
+com\comsystem\homework\model\RobotPlan.class
+com\comsystem\homework\rest\RobotRestController.class
+com\comsystem\homework\HomeworkApplication.class
+com\comsystem\homework\model\RobotAction.class
