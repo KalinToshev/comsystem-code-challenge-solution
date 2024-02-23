@@ -6,8 +6,6 @@ import com.comsystem.homework.model.RobotPlan;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,7 +21,7 @@ public class RobotOperations {
      * @see RobotPlan
      */
     public RobotPlan excavateStonesForDays(int days) {
-        int numberOfStones = 0;
+        int numberOfStones;
 
         //Initialize a list to hold the sequence of robot actions
         List<RobotAction> robotActions = new ArrayList<>();
