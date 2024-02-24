@@ -63,8 +63,43 @@ public class RobotOperations {
      * @see RobotPlan
      */
     public RobotPlan daysRequiredToCollectStones(int numberOfStones) {
-        // TODO
-        return null;
-    }
+        //Initialize the count of days and robots
+        int days = 0;
+        List<RobotAction> robotActions = new ArrayList<>();
 
+        //Check if the number of stones is 2 or less
+        if (numberOfStones <= 2) {
+            //If 2 or fewer stones are required, simply dig for each stone
+            for (int i = 0; i < numberOfStones; i++) {
+                //Add a DIG action for each stone
+                robotActions.add(RobotAction.DIG);
+                //Each dig takes one day
+                days++;
+            }
+        } else {
+            //Start with one robot for cases where more than 2 stones are needed
+            int robots = 1;
+
+            //Continue cloning robots until we have enough robots to collect the stones.
+            while (robots < numberOfStones) {
+                //Add a CLONE action for each day we clone
+                robotActions.add(RobotAction.CLONE);
+                //Double the number of robots each day through cloning
+                robots *= 2;
+                //Increment the day count for each day spent cloning
+                days++;
+            }
+
+            //After we have enough robots to collect the stones in one day, add one day for digging
+
+            //Add a DIG action for the final day when all robots dig
+            robotActions.add(RobotAction.DIG);
+            //Increment the day count for the digging day
+            days++;
+        }
+
+        //Return a new RobotPlan object that encapsulates the total number of days,
+        //the number of stones to be collected, and the list of actions taken
+        return new RobotPlan(days, numberOfStones, robotActions);
+    }
 }

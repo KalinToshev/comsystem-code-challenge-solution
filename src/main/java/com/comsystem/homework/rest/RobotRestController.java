@@ -43,8 +43,16 @@ public final class RobotRestController {
      */
     @PostMapping("/approximation")
     public ResponseEntity<RobotPlan> approximateDays(@RequestParam Integer numberOfStones) {
-        // TODO
-        throw new ErrorResponseException(HttpStatus.I_AM_A_TEAPOT);
-    }
+        //Call the daysRequiredToCollectStones method from the RobotOperations service
+        //to calculate the minimum number of days required to collect the specified number of stones
+        //The numberOfStones parameter is obtained from the request's query parameters
+        RobotPlan plan = robotOperations.daysRequiredToCollectStones(numberOfStones);
 
+        //Wrap the RobotPlan object in a ResponseEntity and return it
+        //This enables the method to provide a response with HTTP status code 200 (OK)
+        //along with the RobotPlan data in the body of the response
+        //The RobotPlan object includes details such as the number of days required,
+        //the total number of stones collected, and the sequence of actions (clone or dig) taken
+        return ResponseEntity.ok(plan);
+    }
 }
